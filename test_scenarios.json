@@ -1,0 +1,27 @@
+[
+  {
+    "method": "GET",
+    "endpoint": "Optional[@GetMapping(\"/{licenseId}\")]",
+    "description": "Verify successful request processing"
+  },
+  {
+    "method": "GET",
+    "endpoint": "Optional[@GetMapping]",
+    "description": "Verify successful request processing"
+  },
+  {
+    "method": "POST",
+    "endpoint": "Optional[@PostMapping]",
+    "description": "Verify successful request processing"
+  },
+  {
+    "method": "PUT",
+    "endpoint": "Optional[@PutMapping]",
+    "description": "Verify successful request processing"
+  },
+  {
+    "method": "DELETE",
+    "endpoint": "Optional[@DeleteMapping(\"/{licenseId}\")]",
+    "description": "Verify successful request processing"
+  }
+]
