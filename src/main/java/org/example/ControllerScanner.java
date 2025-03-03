@@ -69,6 +69,7 @@ public class ControllerScanner {
                 annotationName.equals("RequestMapping");
     }
 
+
     private static String combinePaths(String classPath, String methodPath) {
         if (classPath.endsWith("/") && methodPath.startsWith("/")) {
             return classPath + methodPath.substring(1); // Avoid double slashes
