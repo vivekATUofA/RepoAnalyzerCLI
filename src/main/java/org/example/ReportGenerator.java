@@ -1,37 +1,31 @@
 package org.example;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReportGenerator {
-    public static void generateReport(List<TestScenario> scenarios, String format) {
-        if (format.equalsIgnoreCase("json")) {
-            generateJsonReport(scenarios);
-        } else {
-            generateMarkdownReport(scenarios);
-        }
-    }
 
-    private static void generateJsonReport(List<TestScenario> scenarios) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("test_scenarios.json")) {
-            gson.toJson(scenarios, writer);
-            System.out.println("JSON report generated: test_scenarios.json");
+    public static void generateJsonReport(List<TestScenario> scenarios, String filename) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("[\n");
+            writer.write(scenarios.stream().map(TestScenario::toString).collect(Collectors.joining(",\n")));
+            writer.write("\n]");
+            System.out.println("JSON report generated: " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void generateMarkdownReport(List<TestScenario> scenarios) {
-        try (FileWriter writer = new FileWriter("test_scenarios.md")) {
+    public static void generateMarkdownReport(List<TestScenario> scenarios, String filename) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("# Test Scenarios\n\n");
             for (TestScenario scenario : scenarios) {
-                writer.write("- **" + scenario.getMethod() + "** `" + scenario.getEndpoint() + "`: " + scenario.getDescription() + "\n");
+                writer.write("- **" + scenario.getHttpMethod() + "** " + scenario.getEndpoint() + "\n");
+                writer.write("  - " + scenario.getDescription() + "\n\n");
             }
-            System.out.println("Markdown report generated: test_scenarios.md");
+            System.out.println("Markdown report generated: " + filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
